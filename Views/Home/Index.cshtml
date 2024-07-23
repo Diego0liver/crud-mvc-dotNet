@@ -1,0 +1,59 @@
+﻿
+@model List<ContatoModel>
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="text-center">
+    <h1 class="display-4">Listagem</h1>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="novoContato">
+        <button class="btn btn-success">Novo contato</button>
+    </a>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Acao</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any())
+            {
+                @foreach(ContatoModel contato in Model)
+                {
+                    <tr>
+                        <th scope="row">@contato.id</th>
+                        <td>@contato.nome</td>
+                        <td>@contato.email</td>
+                        <td>@contato.celular</td>
+                        <td>
+                            <a asp-route-id="@contato.id" asp-controller="Contato" asp-action="editarContato" class="btn btn-success">Editar</a>
+                            <a asp-route-id="@contato.id" class="btn btn-info">Ver</a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@contato.id">Excluir</button>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="deleteModal-@contato.id" tabindex="-1" aria-labelledby="deleteModalLabel-@contato.id" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel-@contato.id">Confirmar Exclusão</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Você tem certeza que deseja excluir o contato @contato.nome?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <a href="@Url.Action("Excluir", "Contato", new { id = contato.id })" class="btn btn-primary">Excluir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </tbody>
+    </table>
+</div>

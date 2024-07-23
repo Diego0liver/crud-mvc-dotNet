@@ -1,0 +1,24 @@
+﻿@model ContatoModel
+@{
+    ViewData["Title"] = "Novo contato";
+}
+<div>
+    <div class="text-center">
+        <h1 class="display-4">Criar contato</h1>
+    </div>
+    <form asp-controller="Contato" asp-action="NovoContato" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Nome</label>
+            <input type="text" asp-for=nome class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome">
+        </div>
+        <div class="form-group mt-2">
+            <label for="exampleInputPassword1">E-mail</label>
+            <input asp-for=email type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+        </div>
+        <div class="form-group mt-2">
+            <label for="exampleInputPassword1">Telefone</label>
+            <input asp-for=celular type="text" class="form-control" id="exampleInputPassword1" placeholder="Email">
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    </form>
+</div>
