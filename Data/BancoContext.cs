@@ -10,6 +10,6 @@ namespace crud_login_mvc.Data
         }
 
         public DbSet<ContatoModel> Contatos { get; set; }
-      
+        public DbSet<UserModel> Users { get; set; }
     }
 }

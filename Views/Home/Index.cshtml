@@ -4,56 +4,103 @@
     ViewData["Title"] = "Home";
 }
 <div class="text-center">
-    <h1 class="display-4">Listagem</h1>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Contato" asp-action="novoContato">
-        <button class="btn btn-success">Novo contato</button>
-    </a>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">Acao</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(Model != null && Model.Any())
+    <h5 class="display-4">Stamdup Wind</h5>
+    <div>
+        <p>Data e hora: 20/02 14:00Hr</p>
+        <p>Preco: R$ 25,00</p>
+    </div>
+    @if(TempData["success"] != null)
+    {
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            @TempData["success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            @TempData["error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @{
+        int[] cadeiras = { 01, 02, 03, 04, 05, 06, 07, 08, 09, 10 };
+    }
+    <div class="container sala">
+        <ul class="list-inline">A -
+            @foreach (var cadeira in cadeiras)
             {
-                @foreach(ContatoModel contato in Model)
-                {
-                    <tr>
-                        <th scope="row">@contato.id</th>
-                        <td>@contato.nome</td>
-                        <td>@contato.email</td>
-                        <td>@contato.celular</td>
-                        <td>
-                            <a asp-route-id="@contato.id" asp-controller="Contato" asp-action="editarContato" class="btn btn-success">Editar</a>
-                            <a asp-route-id="@contato.id" class="btn btn-info">Ver</a>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@contato.id">Excluir</button>
-                        </td>
-                    </tr>
-
-                    <div class="modal fade" id="deleteModal-@contato.id" tabindex="-1" aria-labelledby="deleteModalLabel-@contato.id" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel-@contato.id">Confirmar Exclusão</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Você tem certeza que deseja excluir o contato @contato.nome?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <a href="@Url.Action("Excluir", "Contato", new { id = contato.id })" class="btn btn-primary">Excluir</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <button class="cadeira" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <li class="list-inline-item"> @cadeira</li>
+                </button>
             }
-        </tbody>
-    </table>
+        </ul>
+        <ul class="list-inline">B -
+            @foreach (var cadeira in cadeiras)
+            {
+                <button class="cadeira" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <li class="list-inline-item"> @cadeira</li>
+                </button>
+            }
+        </ul>
+        <div class="palco">PALCO</div>
+    </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select>
+                    <option value="value">text</option>
+                </select>
+                <label>Nome:</label>
+                <input type="type" name="name" value="" />
+                <label>CPF:</label>
+                <input type="type" name="name" value="" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    body{
+        background-color: #262c36;
+        color: white;
+    }
+    .cadeira{
+        background-color: #5C4A9D;
+        color: white;
+        padding: 20px;
+        border-radius: 100%;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    .sala{
+        background-color: darkgray;
+        padding: 15px;
+        border-radius: 15px;
+    }
+    .fila{
+        background-color: #180833;
+        color: white;
+        font-weight: bold;
+    }
+    .palco{
+        background-color: white;
+        color: #180833;
+        border-radius: 15px;
+    }
+</style>

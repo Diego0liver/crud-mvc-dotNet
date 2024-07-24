@@ -18,8 +18,22 @@ namespace crud_login_mvc.Controllers
         [HttpPost]
         public IActionResult NovoContato(ContatoModel contato)
         {
-            _contatoRepository.Adicionar(contato);
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contatoRepository.Adicionar(contato);
+                    TempData["success"] = "Contato adicionado com sucesso.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(contato);
+            }
+            catch (Exception err)
+            {
+                TempData["error"] = $"Error ao adicionar contato. {err.Message}";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public IActionResult editarContato(int id)
@@ -29,10 +43,25 @@ namespace crud_login_mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarContato(ContatoModel contato)
+        public IActionResult editarContato(ContatoModel contato)
         {
-            _contatoRepository.Atualizar(contato);
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contatoRepository.Atualizar(contato);
+                    TempData["success"] = "Contato atualizado com sucesso.";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                return View(contato);
+
+            }
+            catch (Exception err)
+            {
+                TempData["error"] = $"Error ao atualizar contato. {err.Message}";
+                return RedirectToAction("Index", "Home");
+            }
         }
         public IActionResult contatoDetalhes()
         {
@@ -40,9 +69,18 @@ namespace crud_login_mvc.Controllers
         }
 
         public IActionResult Excluir(int id)
-        {  
-            _contatoRepository.Deletar(id);
-            return RedirectToAction("Index", "Home");
+        {
+            try
+            {
+                _contatoRepository.Deletar(id);
+                TempData["success"] = "Contato deletado com sucesso";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception err)
+            {
+                TempData["error"] = $"Erro ao deletar contato {err.Message}";
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
